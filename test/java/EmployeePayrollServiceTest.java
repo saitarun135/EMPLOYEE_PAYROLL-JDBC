@@ -1,8 +1,12 @@
 //https://www.tutorialspoint.com/javatime/javatime_localdate_of1.htm
+import java.sql.ResultSet;
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Map;
+
 import org.junit.Assert;
 import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
 
 
 public class EmployeePayrollServiceTest {
@@ -41,4 +45,28 @@ public class EmployeePayrollServiceTest {
 	        List<EmployeePayrollData> employeePayrollData = employeePayrollService.readEmployeePayrollDataForDateRange(startDate, endDate);
 	        Assert.assertEquals(3, employeePayrollList.size());
 	    }
+	  /**
+	   * UC6
+	   */
+	  @Test
+	    public void givenPayrollData_WhenAverageSalaryRetrieveByGender_ShouldReturnProperValue() {
+	        EmployeePayrollService employeePayrollService = new EmployeePayrollService();
+	        employeePayrollService.readEmployeePayrollData(EmployeePayrollService.IOService.DB_IO);
+	        Map<String, Double> averageSalaryByGender = employeePayrollService.averageSalaryByGender();
+	        System.out.println(employeePayrollService.averageSalaryByGender());
+	        boolean actual=employeePayrollService.averageSalaryByGender() != null;
+	        Assert.assertTrue(actual);
+	        //Assertions.assertTrue(averageSalaryByGender.get("M").equals(10000.00) &&
+	        						//averageSalaryByGender.get("F").equals(20000.00));
+	    }
+	  @Test
+	    public void givenPayrollData_WhenAverageGenderRetrieveByGender_ShouldReturnProperValue() {
+	        EmployeePayrollService employeePayrollService = new EmployeePayrollService();
+	        employeePayrollService.readEmployeePayrollData(EmployeePayrollService.IOService.DB_IO);
+	        List<String> minSalarybyFm = employeePayrollService.minSalaryByGender();
+	        System.out.println(employeePayrollService.minSalaryByGender());
+	        boolean actual=employeePayrollService.minSalaryByGender() != null;
+	        Assert.assertTrue(actual);
+	  }
+	  
 }

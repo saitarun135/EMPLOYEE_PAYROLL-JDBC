@@ -1,8 +1,10 @@
 import java.sql.*;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.sql.Date;
 import java.util.List;
+import java.util.Map;
 
 public class EmployeePayrollDBService {
 
@@ -141,4 +143,39 @@ public class EmployeePayrollDBService {
         }
         return employeePayrollList;
     }
+    //uc6
+    public List<String> getSumByGender(){
+    	String sql="SELECT salary,MIN(salary) FROM employee_payroll where gender='F' GROUP BY gender";
+    	List<String> genderAverageGenderMap = new ArrayList<>();
+    	try (Connection connection = this.getConnection()) {
+            Statement statement = connection.createStatement();
+            ResultSet resultSet = statement.executeQuery(sql);
+            while (resultSet.next()) {
+                String minSalary = resultSet.getString("salary");
+                genderAverageGenderMap.add(minSalary);
+            }
+            
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+	return genderAverageGenderMap;
+ }
+    public Map<String, Double> getAverageSalaryByGender() {
+        String sql = "SELECT gender, AVG(salary) as avg_salary FROM employee_payroll GROUP BY gender;";
+        Map<String, Double> genderAverageSalaryMap = new HashMap<>();
+        try (Connection connection = this.getConnection()) {
+            Statement statement = connection.createStatement();
+            ResultSet resultSet = statement.executeQuery(sql);
+            while (resultSet.next()) {
+                String gender = resultSet.getString("gender");
+                double salary = resultSet.getDouble("avg_salary");
+                genderAverageSalaryMap.put(gender, salary);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return genderAverageSalaryMap;
+    }
+
+   
 }
