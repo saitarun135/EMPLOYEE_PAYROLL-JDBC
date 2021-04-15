@@ -57,10 +57,14 @@ public class EmployeePayrollService {
     public List<EmployeePayrollData> readEmployeePayrollDataForDateRange(LocalDate startDate, LocalDate endDate) {
         return employeePayrollDBService.getEmployeePayrollDataForDateRange(startDate, endDate);
     }
-    public List<String> minSalaryByGender() {
+  
+   public List<String> minSalaryByGender() {
         return employeePayrollDBService.getSumByGender();
     }
     public Map<String, Double> averageSalaryByGender() {
         return employeePayrollDBService.getAverageSalaryByGender();
+    } 
+    public void addEmployeeToPayroll(int id,String name, double salary, LocalDate start, String gender) {
+        employeePayrollList.add(employeePayrollDBService.addEmployeePayroll(id,name, salary, start, gender));
     }
 }
